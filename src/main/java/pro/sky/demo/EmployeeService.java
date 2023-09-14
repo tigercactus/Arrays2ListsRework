@@ -1,6 +1,6 @@
 package pro.sky.demo;
 
-import java.util.List;
+import java.util.Map;
 
 public interface EmployeeService {
     public Employee addEmployee(String firstName, String lastName);
@@ -8,6 +8,6 @@ public interface EmployeeService {
     public Employee deleteEmployee(String firstName, String lastName);
     public Employee findEmployee(String firstName, String lastName);
 
-    public List<Employee> printAll();
+    public Map<String, Employee> printAll();
     boolean dataBase();
 }

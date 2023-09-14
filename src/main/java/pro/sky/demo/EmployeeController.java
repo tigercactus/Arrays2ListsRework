@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping ("/employee")
@@ -22,7 +22,7 @@ public class EmployeeController {
         return "Добро пожаловать в базу данных сотрудников";
     }
 @GetMapping("/print")
-public List<Employee> printEm(){
+public Map<String, Employee> printEm(){
         return employeeService.printAll();
 }
     @GetMapping("/add")
@@ -48,15 +48,15 @@ public List<Employee> printEm(){
             try{employeeService.deleteEmployee(firstName,lastName);
                 return String.format("Сотрудник %s %s успешно удалён из базы",firstName,lastName);}
             catch (EmployeeNotFoundException e){
-                return "Сотрудника не существует в базе данных!";
+                return e.toString();
             }
         }
     }
 @GetMapping("/find")
-    public Employee findEmployee(@RequestParam(value = "firstName", required = false) String firstName,
+    public Object findEmployee(@RequestParam(value = "firstName", required = false) String firstName,
                                @RequestParam(value = "lastName",required = false) String lastName ){
     if (firstName == null || lastName == null || firstName =="" || lastName == ""){
-        throw new RuntimeException("Параметры не должны быть пустыми, укажите имя и фамилию");} //кидается в идею, как кинуть пользователю?
+        return "Параметры не должны быть пустыми, укажите имя и фамилию";} //кидается в идею, как кинуть пользователю?
     else{ employeeService.findEmployee(firstName,lastName);
         return new Employee(firstName,lastName);}
 

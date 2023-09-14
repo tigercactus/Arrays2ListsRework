@@ -32,6 +32,8 @@ public class Employee {
         return Objects.hash(firstName, lastName);
     }
 
+    public String getFullName(){return firstName+ " " + lastName;}
+
     public String getFirstName() {
         return firstName;
     }
