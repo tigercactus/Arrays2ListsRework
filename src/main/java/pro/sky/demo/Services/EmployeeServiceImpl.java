@@ -14,7 +14,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public void dataBase(){
         employees.put("Hannah Montana", new Employee("Hannah","Montana",123000, 2));
-        employees.put("Hannah Murray", new Employee("Hannah", "Murray",134000, 4));
+        employees.put("Hannah Murray",  new Employee("Hannah", "Murray",134000, 4));
 
     }
 public Map<String, Employee> printAll(){

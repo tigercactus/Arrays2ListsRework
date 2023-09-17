@@ -19,6 +19,16 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @ExceptionHandler(EmployeeAlreadyAddedException.class)
+    public ResponseEntity<String> employeeAlreadyAddedExceptionHandler() {
+        return ResponseEntity.badRequest().body("Сотрудник уже есть в базе данных");
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<String> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
+        return ResponseEntity.badRequest().body("Параметры не должны быть пустыми, укажите " + ex.getParameterName());
+    }
+
     @GetMapping
     public String welcome() {
         employeeService.dataBase();
@@ -30,15 +40,6 @@ public class EmployeeController {
         return employeeService.printAll();
     }
 
-    @ExceptionHandler(EmployeeAlreadyAddedException.class)
-    public ResponseEntity<String> employeeAlreadyAddedExceptionHandler() {
-        return ResponseEntity.badRequest().body("Сотрудник уже есть в базе данных");
-    }
-
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<String> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
-        return ResponseEntity.badRequest().body("Параметры не должны быть пустыми, укажите " + ex.getParameterName());
-    }
 
     @GetMapping("/add")
     public String addEmployee(@RequestParam(value = "firstName") String firstName,
@@ -54,7 +55,7 @@ public class EmployeeController {
                                  @RequestParam(value = "lastName") String lastName) {
         try {
             employeeService.deleteEmployee(firstName, lastName);
-            return String.format("Сотрудник %s %s успешно удалён из базы", firstName, lastName);
+            return String.format("Сотрудник %s %s успешно удалён из базы ", firstName, lastName);
         } catch (EmployeeNotFoundException e) {
             return e.toString();
         }
