@@ -18,16 +18,18 @@ public class EmployeeController {
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
+    /*@ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<String> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
+        return ResponseEntity.badRequest().body("Параметры не должны быть пустыми, укажите " + ex.getParameterName());
+    } */
+
 
     @ExceptionHandler(EmployeeAlreadyAddedException.class)
     public ResponseEntity<String> employeeAlreadyAddedExceptionHandler() {
         return ResponseEntity.badRequest().body("Сотрудник уже есть в базе данных");
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<String> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
-        return ResponseEntity.badRequest().body("Параметры не должны быть пустыми, укажите " + ex.getParameterName());
-    }
+
 
     @GetMapping
     public String welcome() {
@@ -65,7 +67,7 @@ public class EmployeeController {
     public Employee findEmployee(@RequestParam(value = "firstName") String firstName,
                                  @RequestParam(value = "lastName") String lastName) {
         employeeService.findEmployee(firstName, lastName);
-        return new Employee(firstName, lastName);
+        return employeeService.findEmployee(firstName,lastName);
     }
 }
 

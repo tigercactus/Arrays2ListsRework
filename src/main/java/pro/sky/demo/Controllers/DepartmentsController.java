@@ -12,14 +12,11 @@ import java.util.List;
 
 @RequestMapping("/departments")
 public class DepartmentsController {
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<String> missingServletRequestParameterException(MissingServletRequestParameterException ex) {
-        return ResponseEntity.badRequest().body(" Параметры не должны быть пустыми, укажите "  + ex.getParameterName());
-    }
 
     private final DepartmentsService departmentsService;
 
     public DepartmentsController(DepartmentsService departmentsService) {
+
         this.departmentsService = departmentsService;
     }
 
